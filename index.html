@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+
+        <title>Note Sharing App</title>
+ 
+        <link href="//cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body style="margin: 0px !important; padding: 0px !important;">
+        <div class="container" id="main-body" style="margin: 31.25px auto 0px; display: block;">
+        
+            <div class="functions ng-scope">
+                <div class="nav">
+                    <div class="fl-left" style="opacity: 0.7;">
+                        <div class="notepad_logo" title="Click here for Google Search">
+                        <p class="main-logo" style="margin-block-start: 0; margin-block-end: 0;">Note Sharing App </p>
+                        </div>
+                    </div>
+                    <div class="fl-right" style="opacity: 0.7;">
+                        <a  href="/" class="tooltip">
+                            <i class="ion-plus"></i>
+                            <div class="tooltiptext">New Note</div>
+                        </a>
+                        <a  onclick="show_password();" class="tooltip">
+                            <i class="ion-locked"></i>
+                            <div class="tooltiptext">Password Options</div>
+                        </a>
+                        <a onclick="show_custom_url();" class="tooltip">
+                            <i class="ion-edit"></i>
+                            <div class="tooltiptext">Change URL</div>
+                        </a>
+                    </div>
+                    <div class="modal" id="password">
+                        <!-- ngIf: edit_password --><div ng-if="edit_password" class="ng-scope">
+                            <div class="label"><b>Add Password</b></div>
+                            <input type="password" id="in-psw" class="input-box input-password" placeholder="Password" data-ng-pattern="/^\S*$/" autocomplete="on">
+                            <button onclick="save_password();" class="input-submit">Save</button>
+                            <button onclick="close_modal();" class="input-submit"><i class="ion-close"></i></button>
+                            <br>
+                            <lable id="valid"></lable>
+                        </div><!-- end ngIf: edit_password -->
+                        <!-- ngIf: change_url -->
+                        <!-- ngIf: password_options -->
+                    </div>
+                    <div id="response-message"></div>
+                    <div class="modal" id="custom-url">
+                        <!-- ngIf: edit_password -->
+                        <!-- ngIf: change_url --><div ng-if="change_url" class="ng-scope">
+                            <div class="label"><b>Change URL</b></div>
+                            <label>"/" required in begining </label>
+                            <input type="text " id="url-input"  class="input-box input-url"  placeholder="Page Url" autocomplete="false">
+                          
+                            <button onclick="update_url();" class="input-submit">Change</button>
+                            <button onclick="close_modal();" class="input-submit"><i class="ion-close"></i></button>
+                        </div><!-- end ngIf: change_url -->
+                        <!-- ngIf: password_options -->
+                    </div>
+                </div>
+            </div>
+            <div class="txt-holder ng-scope" ng-controller="app.push">
+                <textarea class="textarea ng-pristine ng-valid ng-empty ng-touched" id="textarea1" placeholder="" style="font-size: 15px; height: 407px;"></textarea>
+               
+            </div>
+            <div ng-controller="app.navigation" class="functions ng-scope">
+                <div class="footer-share text-center" style="opacity: 0.7;">
+                    <button class="share-btn  tooltip" title="Copy Share Link" onclick="share_button();"><span><i class="ion-android-share"></i> Share Link</span><div class="tooltiptext">Copy to clipboard!</div></button>
+
+            </div>
+             </div>
+        </div>
+        <div class="text-center pad-top" id="login">
+            <h1><i class="ion-locked muted"></i></h1> 
+           
+                <div class="input-wrap">
+                    <input type="password" id="login-psw" class="chg" name="pw" placeholder="Password" autofocus="" autocomplete="on">
+                </div>
+                <div class="input-wrap">
+                    <button onclick="login_btn();" class="chg-btn">Login</button>
+                </div>
+            <div id="fail-message"></div>
+        
+        </div>
+       
+    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client.js"></script>
+    
+</html>

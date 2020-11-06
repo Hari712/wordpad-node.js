@@ -7,12 +7,10 @@ workflows:
  heroku_deploy:
     jobs:
        - build
+       
        - heroku/deploy-via-git:
           requires:
             - build
           filters:
             branches:
               only: main
-  node-tests:
-    jobs:
-      - node/test

@@ -1,9 +1,9 @@
-const sum = require('./generateurl');
+const generate = require('./generateurl');
 
 test('Generated Url Done', () => {
-    expect(sum()).toMatch(/[0-9a-zA-Z]+/)
+    expect(generate()).toMatch(/[0-9a-zA-Z]+/)
 });
 
 test('length is 6', ()=>{
-    expect(sum().length).toBe(6);
+    expect(generate().length).toBe(6);
 })

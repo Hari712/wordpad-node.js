@@ -23,10 +23,10 @@ jobs:
           name: test
           command: npm test
       - store_artifacts:
-          path: test-results.xml
+          path: /home/circleci/src/node-example/test/test.js
           prefix: tests
       - store_test_results:
-          path: test-results.xml
+          path: /home/circleci/src/node-example/test/test.js
 
 workflows:
   version: 2

@@ -18,6 +18,19 @@ app.use(express.static(__dirname + '/public'))
 var checkpsw;
 var notallowed = ["localhost","Localhost"];
 
+function valid(inputtxt)
+{ 
+        var letters = /^[0-9a-zA-Z]+$/;
+        console.log(inputtxt)
+        if(inputtxt.match(letters))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+}
 
 app.get('/',(req,res) => {
     var id= randomAlphanumeric(); 

@@ -8,8 +8,5 @@ workflows:
     jobs:
       - node/test
   build:
-      - run:
-          name: Run Tests
-          command: npm run test
       jobs:
         - build

@@ -7,7 +7,7 @@ const app =express()
 
 const http = require('http').createServer(app)
 const db = require('./public/dbconnect')
-
+const randomAlphanumeric = require('./generateurl')
 const io = require('socket.io')(http)
 
 const PORT = process.env.PORT || 3000 
@@ -19,17 +19,7 @@ var checkpsw;
 var notallowed = ["localhost","Localhost"];
 
 
-function randomAlphanumeric() {
-	var str = '',
-			possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
-			numberOfLetters = 6;
-	
-	for (var i = 0; i < numberOfLetters; i++) {
-		str += possible.charAt(Math.floor(Math.random() * possible.length));
-	}
-	
-	return str;
-}
+
 
 function valid(inputtxt)
 { 

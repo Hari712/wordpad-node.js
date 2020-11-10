@@ -5,6 +5,6 @@ test('Generated Url Done', () => {
 });
 
 test('length is 6', ()=>{
-    expect(generate().length).toBe(6);
+    expect(generate().length).toBe(4);
 })
 

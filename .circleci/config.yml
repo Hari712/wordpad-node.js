@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   heroku: circleci/heroku@0.0.10
 jobs:
-  build:
+  build-test:
     working_directory: ~/mern-starter
     docker:
       - image: circleci/node:10.16.3
@@ -34,7 +34,7 @@ workflows:
   version: 2.1
   build-and-heroku_deploy:
     jobs:
-      - build
+      - build-test
       - heroku/deploy-via-git:
           name: heroku/deploy-via-git
           requires: [build]

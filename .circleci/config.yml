@@ -32,9 +32,8 @@ jobs:
 
 workflows:
   version: 2.1
-  build-and-test-and-heroku_deploy:
+  test-and-heroku_deploy:
     jobs:
-      - build
       - test
       - heroku/deploy-via-git:
           name: heroku/deploy-via-git

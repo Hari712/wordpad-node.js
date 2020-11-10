@@ -17,10 +17,10 @@ jobs:
       - run:
           name: install-npm-wee
           command: npm install
-      # - save_cache:
-      #     key: dependency-cache-{{ checksum "package-lock.json" }}
-      #     paths:
-      #       - ./node_modules
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
       - run:
           name: test
           command: npm test
@@ -31,7 +31,7 @@ jobs:
           path: test-results.xml
 
 workflows:
-  version: 2
+  version: 2.1
   build:
     jobs:
       - build

@@ -57,6 +57,7 @@ function senddata(data){
 }
 
 
+
 function save_password(){
 
         var pattern = /^[a-zA-Z0-9@]*$/;

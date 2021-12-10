@@ -1,7 +1,7 @@
 
 
 const mongoose = require('mongoose')
-mongoose.connect(`mongodb+srv://Harshit_test:Harshit@test.rwo25.mongodb.net/<dbname>?retryWrites=true&w=majority`, {useNewUrlParser: true})
+mongoose.connect(`mongodb+srv://Harshit_test:Harshit@test.rwo25.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {useNewUrlParser: true})
 
 
 

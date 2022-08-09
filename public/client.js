@@ -1,8 +1,8 @@
 
-const socket = io() 
+const socket = io()
 var timeoutId;
 var urlpath = window.location.pathname ;
-console.log(window.location.href);
+var originName = window.location.origin;
 var id = window.location.pathname;
 id = id.replace(/\//g, "");
 var new_url;
@@ -40,10 +40,10 @@ socket.on("failed",()=>{
 $("#textarea1").on('input propertychange',(e) =>{
     clearTimeout(timeoutId);
     timeoutId = setTimeout(function() {
-        
-        // Runs 1 second (1000 ms) after the last change    
+
+        // Runs 1 second (1000 ms) after the last change
         senddata($("#textarea1").val());
-       
+
     }, 1000);
 })
 
@@ -61,7 +61,7 @@ function senddata(data){
 function save_password(){
 
         var pattern = /^[a-zA-Z0-9@]*$/;
-        // Runs 1 second (1000 ms) after the last change    
+        // Runs 1 second (1000 ms) after the last change
         const psw =  $(".input-password").val();
         var check;
         if(psw.match(pattern))
@@ -92,7 +92,7 @@ function save_password(){
 }
 
 function update_url(){
-     
+
         new_url =  $(".input-url").val();
 
         socket.emit('update_url_'+urlpath , new_url);
@@ -108,14 +108,14 @@ socket.on("Not_saved",()=>{
     }, 2000);
 })
 socket.on("save_success",()=>{
-    window.location.replace("http://localhost:3000"+new_url)
+    window.location.replace(originName+new_url)
 })
 socket.on('data_'+ urlpath, (data) => {
     $("#textarea1").html(data);
 })
 
 function response(){
-   
+
     $("#response-message").css("opacity","1");
     $("#response-message").css("background-color","#4CAF50");
     $("#response-message").html("<p>Password Saved Sucessfully .</p>")
@@ -173,7 +173,7 @@ socket.on("shared_"+ urlpath , (data) =>{
 function share_button(){
 
     var $temp = $("<input>");
-    var $url = "https://wicked-scarecrow-21072.herokuapp.com/s"+urlpath;
+    var $url = originName+"/s"+urlpath;
 
       $("body").append($temp);
       $temp.val($url).select();

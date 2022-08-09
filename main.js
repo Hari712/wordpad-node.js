@@ -10,7 +10,7 @@ const db = require('./public/dbconnect')
 const randomAlphanumeric = require('./generateurl')
 const io = require('socket.io')(http)
 
-const PORT = process.env.PORT || 3000 
+const PORT = process.env.PORT || 3000
 
 app.use(express.static(__dirname + '/public'))
 
@@ -18,7 +18,7 @@ var checkpsw;
 var notallowed = ["localhost","Localhost"];
 
 function valid(inputtxt)
-{ 
+{
         var letters = /^[0-9a-zA-Z]+$/;
         console.log(inputtxt)
         if(inputtxt.match(letters))
@@ -32,10 +32,10 @@ function valid(inputtxt)
 }
 
 app.get('/',(req,res) => {
-    var id= randomAlphanumeric(); 
-    
-    notepad.find({url: "/"+ id}, function(err, user) 
-    {   
+    var id= randomAlphanumeric();
+
+    notepad.find({url: "/"+ id}, function(err, user)
+    {
         console.log(user)
     if (err)
     {
@@ -53,7 +53,7 @@ app.get('/',(req,res) => {
     console.log(link);
 
    var datalink = new notepad({ url : link , body:"" ,psw:"NULL" , shareurl: "/s"+link });
-    
+
    datalink.save((err, notepad) => {
 
      if (err) return console.error(err);
@@ -77,8 +77,8 @@ app.get(('/*' ) , (req,res) => {
     }
     else if( readonly.length >  2){
         if( readonly[1] =="s"){
-                notepad.find({shareurl: req.path}, function(err, user) 
-                {  
+                notepad.find({shareurl: req.path}, function(err, user)
+                {
                     if (err)
                 {
                     console.log("here in error")
@@ -92,9 +92,9 @@ app.get(('/*' ) , (req,res) => {
                         console.log("s");
                         res.sendFile(__dirname + '/index.html')
                         io.on('connection',(socket)=>{
-                            socket.emit("shared_"+ req.path , user[0].body); 
+                            socket.emit("shared_"+ req.path , user[0].body);
                         })
-                    
+
                     }
                 }
                 })
@@ -104,16 +104,16 @@ app.get(('/*' ) , (req,res) => {
         }
     }
     else {
-      
+
         var checkvalid = valid(readonly[1]);
         console.log(checkvalid)
         if(readonly[1].length <3  || checkvalid == false ){
            return err;
         }
         else{
-                notepad.find({url: req.path}, function(err, user) 
-                {   
-                    console.log(user)
+                notepad.find({url: req.path}, function(err, user)
+                {
+                    console.log('user', user)
                 if (err)
                 {
                     console.log("here in error")
@@ -121,30 +121,30 @@ app.get(('/*' ) , (req,res) => {
                 }
                 else{
                         if(user[0] == null){
-                            
-                            
+
+
                             var datalink = new notepad({ url : req.path , body:"" ,psw:"NULL" ,shareurl: "/s"+req.path});
-                                
+
                             datalink.save((err, notepad) => {
-                            
+
                                 if (err) return console.error(err);
-                            
+
                                 else  res.redirect(req.path)
-                            
+
                                 console.log(notepad);
                             // res.send("This url is not found");
-                            
+
                             });
                         }
-                    
-                        else  if(user[0].psw == "NULL"){
+
+                        else  if(user[0].psw === "NULL"){
 
                             console.log("callled without socket")
                             res.sendFile(__dirname + '/index.html')
                         }
-                    
-                        else {    
-                            checkpsw = user[0].psw ; 
+
+                        else {
+                            checkpsw = user[0].psw ;
                             console.log("callled with socket")
                             res.sendFile(__dirname + '/index.html')
                             io.on('connection',(socket)=>{
@@ -160,8 +160,8 @@ app.get(('/*' ) , (req,res) => {
     console.log("connected")
     console.log(req.path)
 
-    notepad.find({url: req.path}, function(err, user) 
-    {   
+    notepad.find({url: req.path}, function(err, user)
+    {
         console.log(user)
        if (err)
        {
@@ -169,7 +169,7 @@ app.get(('/*' ) , (req,res) => {
        }
        else if(user[0] == null){
         return ;
-        }   
+        }
        else{
             socket.emit('onload_'+req.path ,user[0].body);
        }
@@ -177,7 +177,7 @@ app.get(('/*' ) , (req,res) => {
 
     socket.on('login_psw_'+req.path, (login_psw) => {
         console.log(checkpsw)
-        if(checkpsw === login_psw){   
+        if(checkpsw === login_psw){
             console.log("matched")
             socket.emit("success");
         }
@@ -188,9 +188,9 @@ app.get(('/*' ) , (req,res) => {
     })
 
     socket.on('data_' + req.path, (data) => {
-             
+
         console.log(req.path)
-           
+
             notepad.findOneAndUpdate({url: req.path}, {body: data}, {new: true}, (err, updatedDoc) => {
 
               if(err) return console.log(err);
@@ -198,7 +198,7 @@ app.get(('/*' ) , (req,res) => {
                 console.log(updatedDoc);
             })
         })
-    
+
     socket.on('update_url_'+ req.path, (new_url) =>{
         notepad.find({url: new_url},(err, user)=>{
             console.log(user)
@@ -217,26 +217,26 @@ app.get(('/*' ) , (req,res) => {
             else{
                 socket.emit("Not_saved");
                 console.log("already saved url");
-                
+
             }
         })
     })
 
     socket.on('psw_' + req.path, (psw) => {
 
-            
+
             notepad.findOneAndUpdate({url: req.path}, {psw: psw}, {new: true}, (err, updatedpsw) => {
 
             if(err) return console.log(err);
             else console.log(updatedpsw);
             })
-        
+
         })
-    
+
     })
 
     }
-}) 
+})
 
 app.use((err, req, res, next) => {
     if (!err) return next();

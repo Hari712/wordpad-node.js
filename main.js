@@ -4,7 +4,6 @@ const express = require('express')
 const { allowedNodeEnvironmentFlags } = require('process')
 const { notepad } = require('./public/dbconnect')
 const app =express()
-
 const http = require('http').createServer(app)
 const db = require('./public/dbconnect')
 const randomAlphanumeric = require('./generateurl')
